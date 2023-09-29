@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang = "ru">
+
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0, user-scalable = no">
+    <title>Only test task</title>
+    <style>
+        *
+        {border: 0; margin: 0; padding: 0}
+        .map
+        {background: black url(map.jpg) center no-repeat; background-size: 100% 100%;
+         height: 100vh; min-height: 720px; min-width: 1280px; width: 100vw;
+         position: relative}
+        .round_button
+        {border-radius: 1rem; color: white; cursor: pointer; padding: 10px;
+         height: 40px; min-width: 40px; max-width: auto;
+         position: absolute}
+    </style>
+</head>
+
+<body>
+    <section class = "map"></section>
+    <script>
+        const buttons = [['blue', 446, 714, 'Подпись'], ['green', 687, 482, 'Подпись'],
+                         ['green', 1148, 404, 'Подпись'], ['green', 1107, 790, 'Подпись'],
+                         ['green', 1306, 669, 'Подпись'], ['blue', 580, 282, 'Подпись'],
+                         ['blue', 1081, 629, 'Подпись'], ['blue', 1414, 475, 'Подпись'],
+                         ['blue', 1373, 225, 'Подпись'], ['blue', 1593, 713, 'Подпись']];
+        function placeButtons (buttons)
+        {
+            const element = document.querySelector('section.map');
+            for (let index = 0; index < buttons.length; index++)
+            {
+                let button = document.createElement('button');
+                    button.classList.add('round_button');
+                    button.id = index;
+                    button.style.backgroundColor = buttons[index][0];
+                    button.style.left = Math.round(buttons[index][1]/1920*100) + '%';
+                    button.style.top = Math.round(buttons[index][2]/1080*100) + '%';
+                    button.textContent = '+';
+                element.append(button);
+            }
+            let pressed_button = null;
+            element.addEventListener('click', function(event)
+            {
+                if (event.target.classList.contains('round_button') && event.target != pressed_button)
+                {
+                    event.target.textContent = '\u2013 ' + buttons[event.target.id][3];
+                    if (pressed_button)
+                        pressed_button.textContent = '+';
+                    pressed_button = event.target;
+                }
+                else if (pressed_button)
+                {
+                    pressed_button.textContent = '+';
+                    pressed_button = null;
+                }
+            });
+        }
+        placeButtons(buttons);
+    </script>
+</body>
+
+</html>
